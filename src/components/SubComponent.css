@@ -1,0 +1,16 @@
+.stopButton {
+    padding-top: 10px;
+    padding-left: 15px;
+}
+.bookmarkButton {
+    padding-top: 10px;
+}
+.innerDropdown {
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+  .dropdown {
+    padding-right: 15px !important;
+    display: flex;
+    padding-left: 60px;
+  }
