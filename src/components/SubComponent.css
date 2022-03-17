@@ -13,4 +13,10 @@
     padding-right: 15px !important;
     display: flex;
     padding-left: 60px;
+    background-color: aliceblue;
+  }
+  .box {
+    background-color: aliceblue;
+    border: 1px solid lightblue;
+    box-shadow: 10px 10px 5px lightblue;
   }

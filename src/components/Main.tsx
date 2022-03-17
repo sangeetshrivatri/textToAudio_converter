@@ -8,7 +8,7 @@ function Main() {
     <div className="Main">
        <Container textAlign='center' text>
     <Header as='h2'>Text to Audio Converter </Header>
-    <Image size='large' centered src='https://i.pinimg.com/originals/78/cf/30/78cf304a9c83bb79f922e8be9c1a482f.gif' />
+    <Image size='medium' centered src='https://www.shareicon.net/data/2015/07/26/75140_media_512x512.png' />
      <Divider hidden  />
      <SubComponent />
      <Divider />

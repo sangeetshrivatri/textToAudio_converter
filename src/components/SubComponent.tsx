@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
+import { useParams } from "react-router";
 import axios from 'axios';
-import { List, Popup, Segment, Dropdown, Button } from 'semantic-ui-react'
+import { List, Popup, Dropdown, Button } from 'semantic-ui-react'
 import './SubComponent.css'
 
 export default function SubComponent () {
@@ -12,6 +13,8 @@ export default function SubComponent () {
   const [seekValue, setSeekValue] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  let { id } : {id: string} = useParams();
+
   useEffect(() => {
     const getJson = async () => {
 
@@ -22,7 +25,7 @@ export default function SubComponent () {
         // Await make wait until that 
         // promise settles and return its reult
         const response = await axios.get(
-          "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/433115/getjson");
+          "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id+"/getjson");
 
         // After fetching data stored it in posts state.
         setBook(response.data);
@@ -36,7 +39,7 @@ export default function SubComponent () {
 }, []);
 
   const postData = () => {
-     fetch("https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/433115",
+     fetch("https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id,
      {
      
       // Adding method type
@@ -48,15 +51,10 @@ export default function SubComponent () {
       }
     }
      )
-     
    .then(response => {
           console.log("Afer the post call", response)
-
-         
-        return response.json()
-        
+        return response.json() 
       })
-      
       .then(data => {
         setAudioUrl(data[0].URL)
       })
@@ -75,7 +73,7 @@ export default function SubComponent () {
         // Await make wait until that 
         // promise settles and return its reult
         const response = await axios.get(
-          "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/433115/getbookmarks");
+          "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id+"/getbookmarks");
 
         // After fetching data stored it in posts state.
         setBookmarks(response.data);
@@ -106,7 +104,6 @@ export default function SubComponent () {
     (info : any)=>{
         const timeStampNew = () => {
             audioPlayer.current.currentTime=(info.time);
-
         }
         return(
           <List key={info.id}  divided onClick={timeStampNew}  relaxed>
@@ -122,44 +119,39 @@ export default function SubComponent () {
  
 
   return (
-    <div>
-      <div>
-        <Segment>
-          <div className="dropdown">
-            {audioUrl?
-              <audio 
-                controls
-                className="Audio"
-                src ={audioUrl}
-                ref={audioPlayer}
-                onTimeUpdate={onPlaying}
-              >
-              </audio>:''
-            }
+          <div className="box">
+            <div className="dropdown">
+              {audioUrl?
+                <audio 
+                  controls
+                  className="Audio"
+                  src ={audioUrl}
+                  ref={audioPlayer}
+                  onTimeUpdate={onPlaying}
+                >
+                </audio>:''
+              }
 
-           <div className="innerDropdown">
-              <Popup content='Stop' trigger={<Button  className='icon' onClick={stop} icon='stop circle outline' />} />
-              <Popup content='Bookmarks'
-                trigger={
-                  <Dropdown
-                    selection
-                    placeholder='Select Bookmark'
-                    icon='bookmark'
-                    // floating
-                    labeled
-                    button
-                    className='icon'
-                  >
-                    <Dropdown.Menu >
-                        {DisplayData}
-                      </Dropdown.Menu>
-                  </Dropdown>
-                }
-              />
-      </div>
-    </div>
-</Segment>
-</div>
-    </div>
-  )
+              <div className="innerDropdown">
+                <Popup content='Stop' trigger={<Button  className='icon' onClick={stop} icon='stop circle outline' />} />
+                <Popup content='Bookmarks'
+                  trigger={
+                    <Dropdown
+                      selection
+                      placeholder='Select Bookmark'
+                      icon='bookmark'
+                      labeled
+                      button
+                      className='icon'
+                    >
+                      <Dropdown.Menu >
+                          {DisplayData}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        )
 }
