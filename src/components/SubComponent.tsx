@@ -17,35 +17,20 @@ export default function SubComponent () {
 
   useEffect(() => {
     const getJson = async () => {
-
-        // Till the data is fetch using API 
-        // the Loading page will show.
         setLoading(true);
-
-        // Await make wait until that 
-        // promise settles and return its reult
         const response = await axios.get(
           "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id+"/getjson");
 
-        // After fetching data stored it in posts state.
         setBook(response.data);
-
-        // Closed the loading page
         setLoading(false);
     }
-
-    // Call the function
     getJson();
-}, []);
+  }, []);
 
   const postData = () => {
      fetch("https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id,
      {
-     
-      // Adding method type
       method: "POST",
-       
-      // Adding headers to the request
       headers: {
           "Content-type": "application/json; charset=UTF-8"
       }
@@ -65,26 +50,14 @@ export default function SubComponent () {
 
   useEffect(() => {
     const getBookmark = async () => {
-
-        // Till the data is fetch using API 
-        // the Loading page will show.
         setLoading(true);
-
-        // Await make wait until that 
-        // promise settles and return its reult
         const response = await axios.get(
           "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id+"/getbookmarks");
-
-        // After fetching data stored it in posts state.
         setBookmarks(response.data);
-
-        // Closed the loading page
         setLoading(false);
     }
-
-    // Call the function
     getBookmark();
-}, []);
+  }, []);
 
 
   const stop = () => {
@@ -106,7 +79,7 @@ export default function SubComponent () {
             audioPlayer.current.currentTime=(info.time);
         }
         return(
-          <List key={info.id}  divided onClick={timeStampNew}  relaxed>
+          <List className="list" key={info.id}  divided onClick={timeStampNew}  relaxed>
           <List.Item>
             <List.Content>
               <List.Header  as='a'>{info.title}</List.Header>
