@@ -37,28 +37,16 @@ export default function SubComponent () {
     }
      )
    .then(response => {
-          console.log("Afer the post call", response)
         return response.json() 
       })
       .then(data => {
-        setAudioUrl(data[0].URL)
+        setAudioUrl(data[0].audio)
+        setBookmarks(data[1].bookmarks)
       })
   }
   useEffect(() => {
-    postData()
+    postData();
   }, [])
-
-  useEffect(() => {
-    const getBookmark = async () => {
-        setLoading(true);
-        const response = await axios.get(
-          "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id+"/getbookmarks");
-        setBookmarks(response.data);
-        setLoading(false);
-    }
-    getBookmark();
-  }, []);
-
 
   const stop = () => {
     audioPlayer.current.pause();
@@ -89,6 +77,7 @@ export default function SubComponent () {
         )
     }
   )
+
  
 
   return (

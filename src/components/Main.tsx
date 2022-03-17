@@ -7,8 +7,8 @@ function Main() {
   return (
     <div className="Main">
        <Container textAlign='center' text>
-    <Header as='h2'>Text to Audio Converter </Header>
-    <Image size='medium' centered src='https://www.shareicon.net/data/2015/07/26/75140_media_512x512.png' />
+    <Header textAlign='center' as='h2'>Text to Audio Converter </Header>
+    <Image size='small' centered src='https://www.shareicon.net/data/2015/07/26/75140_media_512x512.png' />
      <Divider hidden  />
      <SubComponent />
      <Divider />

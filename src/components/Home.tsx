@@ -7,7 +7,9 @@ function Home() {
   return (
     <div className="Home">
         <Image src='https://know.creditsights.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/CreditSights_logowtaglineBIG.png.webp' />
-           <Main /> 
+        <React.Suspense fallback={<div>Loading...</div>}>
+      <Main />
+      </React.Suspense>
     </div>
   );
 }
