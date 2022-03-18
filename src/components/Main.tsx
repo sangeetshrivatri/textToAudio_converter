@@ -2,15 +2,17 @@ import React from 'react';
 import { Header,Container, Divider, Image, } from 'semantic-ui-react'
 import  './Main.css'
 import SubComponent from './SubComponent';
+import SubComponentCopy from './SubComponentCop';
 
 function Main() {
   return (
     <div className="Main">
        <Container textAlign='center' text>
-    <Header textAlign='center' as='h2'>Text to Audio Converter </Header>
+    <Header textAlign='center' as='h2'>Article </Header>
     <Image size='small' centered src='https://www.shareicon.net/data/2015/07/26/75140_media_512x512.png' />
      <Divider hidden  />
      <SubComponent />
+     {/* <SubComponentCopy /> */}
      <Divider />
     <p>
     We maintain our risk-on sentiment for the High Yield Chemicals driven by

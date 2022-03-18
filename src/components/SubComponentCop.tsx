@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router";
 import axios from 'axios';
-import { List, Popup, Dropdown, Button, Dimmer, Loader  } from 'semantic-ui-react'
+import { List, Popup, Dropdown, Button, Dimmer, Loader, } from 'semantic-ui-react'
 import './SubComponent.css'
 
-export default function SubComponent () {
+export default function SubComponentCopy () {
   const [audioUrl, setAudioUrl] = useState <any>([])
   const [bookmarks, setBookmarks] = useState([])
-  const [book, setBook] = useState <any>([])
+  const [book, setBook] = useState([])
   const audioPlayer = useRef<any>();
   const [currentTime, setCurrentTime] = useState(0);
   const [seekValue, setSeekValue] = useState(0);
@@ -17,10 +17,12 @@ export default function SubComponent () {
 
   useEffect(() => {
     const getJson = async () => {
+        setLoading(true);
         const response = await axios.get(
           "https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id+"/getjson");
 
         setBook(response.data);
+        setLoading(false);
     }
     getJson();
   }, []);
@@ -38,16 +40,53 @@ export default function SubComponent () {
    .then(response => {
         return response.json() 
       })
+      
+    
       .then(data => {
-        setLoading(false);
-        setAudioUrl(data[0].audio)
-        setBookmarks(data[1].bookmarks)
-      }).catch(err=>{
-    })
+        if(data[0].audio && data[1].bookmarks )
+        {
+
+          setAudioUrl(data[0].audio)
+          setBookmarks(data[1].bookmarks)
+        }
+        else{
+          convertTextToAudioFile();
+        }
+      })
+      .catch(err=>{
+        convertTextToAudioFile();
+      })
   }
   useEffect(() => {
     postData();
   }, [])
+
+  const convertTextToAudioFile = ()=>{
+    fetch("https://7rhv3pzyxk.execute-api.eu-central-1.amazonaws.com/test/credit-sights-output-sachin/poc/article/"+id,
+    {
+     method: "POST",
+      headers: {
+          "Content-type": "application/json; charset=UTF-8"
+      }
+    }
+     )
+     
+   .then(response => {
+        return response.json()
+      })
+      
+      .then(data => {
+      console.log('data==', data);
+      setAudioUrl(data[0].audio)
+        setBookmarks(data[1].bookmarks)
+       
+      }).catch(err=>{
+
+        console.log("Artical is not present.");
+      })
+
+  }
+ 
 
   const stop = () => {
     audioPlayer.current.pause();
@@ -78,14 +117,18 @@ export default function SubComponent () {
         )
     }
   )
+
  
 
   return (
           <div className="box">
+
              {loading ? (
                     <Dimmer active inverted>
                     <Loader inverted>Loading</Loader>
                   </Dimmer>) :
+                    
+              
             <div className="dropdown">
               {audioUrl?
                 <audio 
@@ -95,7 +138,7 @@ export default function SubComponent () {
                   ref={audioPlayer}
                   onTimeUpdate={onPlaying}
                 >
-                </audio>:''
+                </audio>:' Loading...'
               }
 
               <div className="innerDropdown">
